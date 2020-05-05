@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "143316318232",
+    "firebase_url": "https://testingbotdb-xwxvvy.firebaseio.com",
+    "project_id": "testingbotdb-xwxvvy",
+    "storage_bucket": "testingbotdb-xwxvvy.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:143316318232:android:111817df5954d50b32ab6d",
+        "android_client_info": {
+          "package_name": "com.example.chatbot_stiki"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "143316318232-aqro697v5b5aaftmdlemv6snl1gjuium.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.chatbot_stiki",
+            "certificate_hash": "8fb3b4047317be7fda30fc54aeedf9fb45cd4714"
+          }
+        },
+        {
+          "client_id": "143316318232-8bldolm7pcckiul4rl8p1igtskkeh7pv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA9v5xJQA5ib11IeSo-IcX4OefhhlkUjAI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "143316318232-vfkhjnuav5kggsdsj572b0p5ujrocva0.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
