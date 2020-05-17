@@ -90,6 +90,7 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
     String url = Server.URL_TBLMHS ;
     public final static String TAG_EMAIL = "email";
     public final static String TAG_ID = "id";
+    String FULLNAME = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -282,7 +283,7 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         });
     }
 
-    private void initChatView() {
+    public void initChatView() {
 
         int myId = 0;
         Bitmap icon = BitmapFactory.decodeResource(getResources(), R.drawable.stikbots);
@@ -294,7 +295,7 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         String email = getIntent().getStringExtra(LoginActivity.TAG_EMAIL);
 
         String myName = email ;
-        myAccount = new User(myId, myName, null);
+        myAccount = new User(myId, FULLNAME, null);
 
         int botId = 1;
         String botName = "StikiBot";
@@ -384,7 +385,7 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
 
                         list_data.add(map);
 
-                        String FULLNAME = list_data.get(0).get("first_name") + list_data.get(0).get("last_name");
+                        FULLNAME = list_data.get(0).get("first_name") + list_data.get(0).get("last_name");
                         Log.d("FULLNAME",FULLNAME);
                     }
 
