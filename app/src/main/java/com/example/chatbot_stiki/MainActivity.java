@@ -101,10 +101,6 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         //Language, Dialogflow Client access token
         final LanguageConfig config = new LanguageConfig("id", "c6f262b260774a75ab18e02eba4e8f88");
         initService(config);
-
-
-
-       
         getMHS();
     }
 
