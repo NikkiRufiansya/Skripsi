@@ -115,14 +115,8 @@ public class LoginActivity extends AppCompatActivity  {
                     // Prompt user to enter credentials
                     Toast.makeText(getApplicationContext() ,"Kolom tidak boleh kosong", Toast.LENGTH_LONG).show();
                 }
-
             }
         });
-
-
-
-
-
     }
 
     private void checkLogin(final String user_email, final String user_password) {

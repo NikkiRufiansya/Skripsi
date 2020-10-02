@@ -1,8 +1,6 @@
 package com.example.chatbot_stiki;
 
-/**
- * Created by flatfisher on 1/10/2018 AD.
- */
+
 
 import android.graphics.Bitmap;
 
