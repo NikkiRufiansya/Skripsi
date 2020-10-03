@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -90,20 +91,21 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
     String url = Server.URL_TBLMHS ;
     public final static String TAG_EMAIL = "email";
     public final static String TAG_ID = "id";
+    String FULLNAME = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        if (android.os.Build.VERSION.SDK_INT > 9) {
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+        }
         initChatView();
 
         //Language, Dialogflow Client access token
         final LanguageConfig config = new LanguageConfig("id", "c6f262b260774a75ab18e02eba4e8f88");
         initService(config);
-
-
-
-       
         getMHS();
     }
 
@@ -148,6 +150,7 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
                 return super.onOptionsItemSelected(item);
         }
     }
+
 
 
 
@@ -282,19 +285,26 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         });
     }
 
-    private void initChatView() {
+    public void initChatView() {
 
         int myId = 0;
         Bitmap icon = BitmapFactory.decodeResource(getResources(), R.drawable.stikbots);
         Bitmap iconUser = BitmapFactory.decodeResource(getResources(), R.drawable.ic_action_user);
 
+        String foto = "https://pbs.twimg.com/profile_images/1164752786992484354/PyFcqmzG.jpg";
 
         sharedPreferences = getSharedPreferences(LoginActivity.my_shared_preferences, Context.MODE_PRIVATE);
-
+        try {
+            URL url = new URL(foto);
+            Bitmap image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+            myAccount = new User(myId, FULLNAME, image);
+        } catch(IOException e) {
+            System.out.println(e);
+        }
         String email = getIntent().getStringExtra(LoginActivity.TAG_EMAIL);
 
         String myName = email ;
-        myAccount = new User(myId, myName, null);
+
 
         int botId = 1;
         String botName = "StikiBot";
@@ -384,7 +394,7 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
 
                         list_data.add(map);
 
-                        String FULLNAME = list_data.get(0).get("first_name") + list_data.get(0).get("last_name");
+                        FULLNAME = list_data.get(0).get("first_name") + list_data.get(0).get("last_name");
                         Log.d("FULLNAME",FULLNAME);
                     }
 
@@ -403,6 +413,7 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
 
         requestQueue.add(stringRequest);
     }
+
 
 
 

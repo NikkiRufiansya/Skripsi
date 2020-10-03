@@ -28,6 +28,14 @@ public class Setelan extends AppCompatActivity {
             }
         });
 
+        about = findViewById(R.id.about);
+        about.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(Setelan.this, About.class));
+            }
+        });
+
 
 
     }
