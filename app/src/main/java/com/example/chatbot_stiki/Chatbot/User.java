@@ -1,4 +1,4 @@
-package com.example.chatbot_stiki;
+package com.example.chatbot_stiki.Chatbot;
 
 
 

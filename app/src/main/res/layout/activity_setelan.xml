@@ -1,37 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/bg"
-    tools:context=".Setelan">
+    android:orientation="vertical"
+    tools:context=".Menu.Setelan">
 
 
     <androidx.cardview.widget.CardView
-        android:foreground="?android:attr/selectableItemBackground"
-        android:clickable="true"
         android:id="@+id/profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:background="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground">
 
         <LinearLayout
-            android:layout_gravity="center_vertical"
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                xmlns:app="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/profile_image"
                 android:layout_width="96dp"
                 android:layout_height="96dp"
-                android:src="@drawable/cs"
-                />
+                app:civ_border_width="2dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/nama"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:text="Nama" />
+
+                <TextView
+                    android:id="@+id/email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/_5sdp"
+                    android:text="Email" />
+
+            </LinearLayout>
 
 
         </LinearLayout>
@@ -39,47 +58,48 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:foreground="?android:attr/selectableItemBackground"
-        android:clickable="true"
         android:id="@+id/help"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:background="@color/white"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:clickable="true"
+        android:foreground="?android:attr/selectableItemBackground">
 
         <LinearLayout
-            android:layout_gravity="center_vertical"
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
 
             <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_margin="20dp"
                 android:foregroundGravity="center"
-                android:layout_gravity="center"
-                android:src="@drawable/cs"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:src="@drawable/cs" />
 
             <LinearLayout
-                android:layout_gravity="center"
-                android:orientation="vertical"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
 
                 <TextView
-                    android:textStyle="bold"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:text="Pusat Bantuan"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:textStyle="bold" />
+
                 <TextView
-                    android:textStyle="bold"
-                    android:layout_margin="5dp"
-                    android:layout_gravity="center_horizontal"
-                    android:text="Kami Siap Membantu Anda"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="5dp"
+                    android:text="Kami Siap Membantu Anda"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
@@ -88,47 +108,46 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:layout_margin="10dp"
-        android:background="@color/white"
         android:id="@+id/about"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@color/white">
 
         <LinearLayout
-            android:layout_gravity="center_vertical"
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:orientation="horizontal">
 
             <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_margin="20dp"
                 android:foregroundGravity="center"
-                android:layout_gravity="center"
-                android:src="@drawable/info"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:src="@drawable/info" />
 
             <LinearLayout
-                android:layout_gravity="center"
-                android:orientation="vertical"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
 
 
                 <TextView
-                    android:textStyle="bold"
-                    android:layout_margin="5dp"
-                    android:layout_gravity="center_horizontal"
-                    android:text="Tentang Aplikasi"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="5dp"
+                    android:text="Tentang Aplikasi"
+                    android:textStyle="bold" />
 
             </LinearLayout>
 
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
-
 
 
 </LinearLayout>

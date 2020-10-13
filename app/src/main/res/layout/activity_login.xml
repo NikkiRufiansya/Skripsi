@@ -10,7 +10,7 @@
     android:orientation="vertical"
     android:background="#142a3b"
     android:padding="16dp"
-    tools:context=".LoginActivity">
+    tools:context=".Menu.LoginActivity">
 
 
 
@@ -34,7 +34,7 @@
             android:textColor="@color/white"
             android:textColorHighlight="@color/white"
             android:textColorHint="@color/white"
-            android:inputType="textEmailAddress"
+            android:inputType="text"
             android:hint="Email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>

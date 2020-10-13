@@ -1,10 +1,8 @@
-package com.example.chatbot_stiki;
+package com.example.chatbot_stiki.Menu;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
-import android.content.ClipData;
-import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,7 +14,6 @@ import android.os.Bundle;
 import android.os.StrictMode;
 import android.text.TextUtils;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,10 +24,13 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.JsonObjectRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.bumptech.glide.Glide;
+import com.example.chatbot_stiki.Api.UserService;
+import com.example.chatbot_stiki.Chatbot.LanguageConfig;
+import com.example.chatbot_stiki.R;
+import com.example.chatbot_stiki.Server.Server;
+import com.example.chatbot_stiki.Chatbot.User;
 import com.github.bassaer.chatmessageview.model.Message;
 import com.github.bassaer.chatmessageview.view.ChatView;
 import com.google.gson.Gson;
@@ -41,13 +41,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -68,11 +62,11 @@ import ai.api.model.AIResponse;
 import ai.api.model.Metadata;
 import ai.api.model.Result;
 import ai.api.model.Status;
+import okhttp3.ResponseBody;
+import retrofit2.Call;
+import retrofit2.Callback;
 
-import static com.example.chatbot_stiki.LoginActivity.TAG_EMAIL;
-import static com.example.chatbot_stiki.LoginActivity.TAG_ID;
-
-public class MainActivity extends AppCompatActivity  implements View.OnClickListener  {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     public static final String TAG = MainActivity.class.getName();
     private Gson gson = GsonFactory.getGson();
@@ -88,7 +82,7 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
 
     SharedPreferences sharedPreferences;
 
-    String url = Server.URL_TBLMHS ;
+    String url = Server.URL_TBLMHS;
     public final static String TAG_EMAIL = "email";
     public final static String TAG_ID = "id";
     String FULLNAME = null;
@@ -106,14 +100,14 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         //Language, Dialogflow Client access token
         final LanguageConfig config = new LanguageConfig("id", "c6f262b260774a75ab18e02eba4e8f88");
         initService(config);
-        getMHS();
+
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_menu,menu);
+        inflater.inflate(R.menu.main_menu, menu);
         return true;
     }
 
@@ -123,16 +117,9 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.setelan:
-
-                SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.my_shared_preferences, Context.MODE_PRIVATE);
-
-                String id = getIntent().getStringExtra(TAG_ID);
-                String email = getIntent().getStringExtra(TAG_EMAIL);
-
-
-                Log.d("AMBIL id : " , id + "Ambil Email : " + email);
-                Intent intent1  = new Intent(MainActivity.this, Setelan.class);
-                intent1.putExtra(TAG_ID,id);
+                String iduser = getIntent().getStringExtra("id");
+                Intent intent1 = new Intent(MainActivity.this, Setelan.class);
+                intent1.putExtra("id", iduser);
                 startActivity(intent1);
                 return true;
             case R.id.keluar:
@@ -150,8 +137,6 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
                 return super.onOptionsItemSelected(item);
         }
     }
-
-
 
 
     @Override
@@ -195,11 +180,11 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
             String event = params[1];
             String context = params[2];
 
-            if (!TextUtils.isEmpty(query)){
+            if (!TextUtils.isEmpty(query)) {
                 request.setQuery(query);
             }
 
-            if (!TextUtils.isEmpty(event)){
+            if (!TextUtils.isEmpty(event)) {
                 request.setEvent(new AIEvent(event));
             }
 
@@ -280,41 +265,63 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                Log.e(TAG,error.toString());
+                Log.e(TAG, error.toString());
             }
         });
     }
 
     public void initChatView() {
-
-        int myId = 0;
-        Bitmap icon = BitmapFactory.decodeResource(getResources(), R.drawable.stikbots);
-        Bitmap iconUser = BitmapFactory.decodeResource(getResources(), R.drawable.ic_action_user);
-
-        String foto = "https://pbs.twimg.com/profile_images/1164752786992484354/PyFcqmzG.jpg";
-
-        sharedPreferences = getSharedPreferences(LoginActivity.my_shared_preferences, Context.MODE_PRIVATE);
-        try {
-            URL url = new URL(foto);
-            Bitmap image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-            myAccount = new User(myId, FULLNAME, image);
-        } catch(IOException e) {
-            System.out.println(e);
-        }
-        String email = getIntent().getStringExtra(LoginActivity.TAG_EMAIL);
-
-        String myName = email ;
+        String iduser = getIntent().getStringExtra("id");
+        UserService userService = Server.getUserService();
+        userService.getMahasiswa(iduser).enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                try {
+                    String json = response.body().string();
+                    JSONObject object = new JSONObject(json);
+                    JSONArray result = object.getJSONArray("result");
+                    for (int i = 0; i < result.length(); i++) {
+                        JSONObject mhs = result.getJSONObject(i);
+                        int myId = 0;
+                        Bitmap icon = BitmapFactory.decodeResource(getResources(), R.drawable.stikbots);
+                        Bitmap iconUser = BitmapFactory.decodeResource(getResources(), R.drawable.ic_action_user);
 
 
-        int botId = 1;
-        String botName = "StikiBot";
-        StikiBot = new User(botId, botName, icon);
+
+                        sharedPreferences = getSharedPreferences(LoginActivity.my_shared_preferences, Context.MODE_PRIVATE);
+                        try {
+                            String urlFoto = mhs.getString("image_url");
+                            String foto = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/220px-User_icon_2.svg.png";
+                            URL url = new URL(urlFoto);
+                            Bitmap image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                            myAccount = new User(myId, mhs.getString("first_name"), image);
+                        } catch (IOException e) {
+                            System.out.println(e);
+                        }
+
+                        int botId = 1;
+                        String botName = "StikiBot";
+                        StikiBot = new User(botId, botName, icon);
+
+
+                    }
+                }catch (Exception e){
+
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+
+            }
+        });
+
 
 
 
         chatView = findViewById(R.id.chat_view);
         chatView.setRightBubbleColor(ContextCompat.getColor(this, R.color.green500));
-        chatView.setLeftBubbleColor(Color.rgb(177,200,255));
+        chatView.setLeftBubbleColor(Color.rgb(177, 200, 255));
         chatView.setBackgroundColor(Color.WHITE);
         chatView.setSendButtonColor(ContextCompat.getColor(this, R.color.lightBlue500));
         chatView.setSendIcon(R.drawable.ic_action_send);
@@ -329,11 +336,9 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
         chatView.setMessageFontSize(45);
 
 
-
         chatView.setOnBubbleClickListener(new Message.OnBubbleClickListener() {
             @Override
             public void onClick(Message message) {
-
 
 
             }
@@ -369,51 +374,6 @@ public class MainActivity extends AppCompatActivity  implements View.OnClickList
                 AIConfiguration.RecognitionEngine.System);
         aiDataService = new AIDataService(this, config);
     }
-
-
-    public void getMHS(){
-        SharedPreferences sharedpreferences = getSharedPreferences(LoginActivity.my_shared_preferences, Context.MODE_PRIVATE);
-        String id = sharedpreferences.getString(TAG_ID,"");
-        String Adress = url + id;
-        requestQueue = Volley.newRequestQueue(MainActivity.this);
-
-        list_data = new ArrayList<HashMap<String, String>>();
-
-        stringRequest = new StringRequest(Request.Method.GET, Adress, new Response.Listener<String>() {
-            @Override
-            public void onResponse(String response) {
-                try {
-                    JSONObject jsonObject = new JSONObject(response);
-                    JSONArray jsonArray = jsonObject.getJSONArray("result");
-                    for (int a = 0; a < jsonArray.length(); a ++){
-                        JSONObject json = jsonArray.getJSONObject(a);
-                        HashMap<String, String> map  = new HashMap<String, String>();
-                        map.put("id", json.getString("id"));
-                        map.put("first_name", json.getString("first_name"));
-                        map.put("last_name", json.getString("last_name"));
-
-                        list_data.add(map);
-
-                        FULLNAME = list_data.get(0).get("first_name") + list_data.get(0).get("last_name");
-                        Log.d("FULLNAME",FULLNAME);
-                    }
-
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-                Toast.makeText(MainActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
-            }
-        });
-
-        requestQueue.add(stringRequest);
-    }
-
 
 
 
