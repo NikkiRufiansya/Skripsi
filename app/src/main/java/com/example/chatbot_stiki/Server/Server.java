@@ -5,7 +5,7 @@ import com.example.chatbot_stiki.Chatbot.User;
 
 public class Server {
 
-    public static String localhost = "http://testingbotdialogflow.000webhostapp.com";
+    public static String localhost = "http://stiki-new.herokuapp.com/";
 
     public static final String URL_Login = localhost+"/UserLogin.php";
 

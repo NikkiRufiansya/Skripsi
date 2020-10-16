@@ -4,6 +4,8 @@
 
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:name=".Server.AppController"
@@ -13,11 +15,13 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Menu.About"
-            android:parentActivityName=".Menu.Setelan"></activity>
+        <activity android:name=".Menu.EditProfile"></activity>
+        <activity
+            android:name=".Menu.About"
+            android:parentActivityName=".Menu.Setelan" />
         <activity
             android:name=".Menu.Help"
-            android:parentActivityName=".Menu.Setelan"></activity>
+            android:parentActivityName=".Menu.Setelan" />
         <activity
             android:name=".Menu.Setelan"
             android:parentActivityName=".Menu.MainActivity" />
@@ -30,9 +34,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Menu.MainActivity">
-
-        </activity>
+        <activity android:name=".Menu.MainActivity"></activity>
     </application>
 
 </manifest>

@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Gson gson = GsonFactory.getGson();
     private AIDataService aiDataService;
     private ChatView chatView;
-    private User myAccount;
+    public User myAccount;
     private User StikiBot;
 
     private RequestQueue requestQueue;
@@ -271,6 +271,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void initChatView() {
+
         String iduser = getIntent().getStringExtra("id");
         UserService userService = Server.getUserService();
         userService.getMahasiswa(iduser).enqueue(new Callback<ResponseBody>() {
@@ -280,28 +281,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     String json = response.body().string();
                     JSONObject object = new JSONObject(json);
                     JSONArray result = object.getJSONArray("result");
+                    System.out.println(result);
                     for (int i = 0; i < result.length(); i++) {
                         JSONObject mhs = result.getJSONObject(i);
-                        int myId = 0;
-                        Bitmap icon = BitmapFactory.decodeResource(getResources(), R.drawable.stikbots);
-                        Bitmap iconUser = BitmapFactory.decodeResource(getResources(), R.drawable.ic_action_user);
-
-
-
                         sharedPreferences = getSharedPreferences(LoginActivity.my_shared_preferences, Context.MODE_PRIVATE);
                         try {
+                            int myId = 0;
+                            Bitmap icon = BitmapFactory.decodeResource(getResources(), R.drawable.stikbots);
                             String urlFoto = mhs.getString("image_url");
                             String foto = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/220px-User_icon_2.svg.png";
                             URL url = new URL(urlFoto);
                             Bitmap image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
                             myAccount = new User(myId, mhs.getString("first_name"), image);
+                            int botId = 1;
+                            String botName = "StikiBot";
+                            StikiBot = new User(botId, botName, icon);
                         } catch (IOException e) {
                             System.out.println(e);
                         }
 
-                        int botId = 1;
-                        String botName = "StikiBot";
-                        StikiBot = new User(botId, botName, icon);
+
 
 
                     }
@@ -315,8 +314,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
             }
         });
-
-
 
 
         chatView = findViewById(R.id.chat_view);
