@@ -34,7 +34,7 @@ public class LoginActivity extends AppCompatActivity  {
 
 
     EditText Editemail, Editpassword;
-    Button Login;
+    Button Login, register;
 
     ProgressDialog pDialog;
     int success;
@@ -69,7 +69,7 @@ public class LoginActivity extends AppCompatActivity  {
         Editpassword = (EditText) findViewById(R.id.password);
 
         Login = (Button) findViewById(R.id.login);
-
+        register = findViewById(R.id.sign_up);
         conMgr = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         {
             if (conMgr.getActiveNetworkInfo() != null
@@ -116,6 +116,13 @@ public class LoginActivity extends AppCompatActivity  {
                     // Prompt user to enter credentials
                     Toast.makeText(getApplicationContext() ,"Kolom tidak boleh kosong", Toast.LENGTH_LONG).show();
                 }
+            }
+        });
+
+        register.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(LoginActivity.this, Register.class));
             }
         });
     }

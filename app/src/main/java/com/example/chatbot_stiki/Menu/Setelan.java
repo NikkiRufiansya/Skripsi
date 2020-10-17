@@ -50,6 +50,8 @@ public class Setelan extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(Setelan.this, Help.class);
+                String iduser = getIntent().getStringExtra("id");
+                intent.putExtra("id", iduser);
                 startActivity(intent);
             }
         });
