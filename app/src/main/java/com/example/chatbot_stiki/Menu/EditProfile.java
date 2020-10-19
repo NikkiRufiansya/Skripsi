@@ -69,14 +69,19 @@ public class EditProfile extends AppCompatActivity {
             }
 
 
-
             @Override
             public void onPrepareLoad(Drawable placeHolderDrawable) {
 
             }
         };
 
-        Picasso.get().load(photo_profile).into(target);
+        if (photo_profile.equalsIgnoreCase("")) {
+
+        } else {
+            Picasso.get().load(photo_profile).into(target);
+        }
+        System.out.println(target);
+
         namaDepan.setText(nama_depan);
         namaBelakang.setText(nama_belakang);
         email.setText(user_email);
@@ -95,7 +100,7 @@ public class EditProfile extends AppCompatActivity {
 
     }
 
-    private  void update(){
+    private void update() {
         final String id = getIntent().getStringExtra("id");
         String nama_depan = namaDepan.getText().toString();
         String nama_belakang = namaBelakang.getText().toString();
@@ -105,7 +110,7 @@ public class EditProfile extends AppCompatActivity {
         userService.updateProfile(id, nama_depan, nama_belakang, user_email, imgdata).enqueue(new Callback<ResponseBody>() {
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                Intent intent = new Intent(EditProfile.this, Setelan.class);
+                Intent intent = new Intent(EditProfile.this, MainActivity.class);
                 intent.putExtra("id", id);
                 startActivity(intent);
             }

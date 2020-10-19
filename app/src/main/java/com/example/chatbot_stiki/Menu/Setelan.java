@@ -81,7 +81,12 @@ public class Setelan extends AppCompatActivity {
                     JSONArray result = object.getJSONArray("result");
                     for (int i = 0; i < result.length(); i++) {
                         final JSONObject mhs = result.getJSONObject(i);
-                        Picasso.get().load(mhs.getString("image_url")).into(photo);
+                        String img = mhs.getString("image_url");
+                        if (img.equalsIgnoreCase("")){
+                            photo.setImageResource(R.drawable.user_profile);
+                        }else{
+                            Picasso.get().load(mhs.getString("image_url")).into(photo);
+                        }
                         TvNama.setText(mhs.getString("first_name") + mhs.getString("last_name"));
                         TvEmail.setText(mhs.getString("user_email"));
                         btnEdit.setOnClickListener(new View.OnClickListener() {

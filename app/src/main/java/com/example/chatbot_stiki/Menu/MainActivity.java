@@ -142,17 +142,22 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @Override
     public void onClick(View v) {
         //new message
-        final Message message = new Message.Builder()
-                .setUser(myAccount)
-                .setRightMessage(true)
-                .setMessageText(chatView.getInputText())
-                .hideIcon(false)
-                .build();
-        //Set to chat view
-        chatView.send(message);
-        sendRequest(chatView.getInputText());
-        //Reset edit text
-        chatView.setInputText("");
+        try {
+            final Message message = new Message.Builder()
+                    .setUser(myAccount)
+                    .setRightMessage(true)
+                    .setMessageText(chatView.getInputText())
+                    .hideIcon(false)
+                    .build();
+            //Set to chat view
+            chatView.send(message);
+            sendRequest(chatView.getInputText());
+            //Reset edit text
+            chatView.setInputText("");
+        }catch (Exception e){
+
+        }
+
     }
 
     private void sendRequest(String text) {
@@ -289,10 +294,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                             int myId = 0;
                             Bitmap icon = BitmapFactory.decodeResource(getResources(), R.drawable.stikbots);
                             String urlFoto = mhs.getString("image_url");
-                            String foto = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/220px-User_icon_2.svg.png";
-                            URL url = new URL(urlFoto);
-                            Bitmap image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-                            myAccount = new User(myId, mhs.getString("first_name"), image);
+                            String name = mhs.getString("first_name");
+                            if(urlFoto.equalsIgnoreCase("")){
+
+                                String foto = "https://upload.wikimedia.org/wikipedia/commons/thumb/1/12/User_icon_2.svg/220px-User_icon_2.svg.png";
+                                URL url = new URL(foto);
+                                Bitmap imageDefault = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                                myAccount = new User(myId, name, imageDefault);
+                            }else{
+                                URL url = new URL(urlFoto);
+                                Bitmap image = BitmapFactory.decodeStream(url.openConnection().getInputStream());
+                                myAccount = new User(myId, name, image);
+                            }
+
+
                             int botId = 1;
                             String botName = "StikiBot";
                             StikiBot = new User(botId, botName, icon);
