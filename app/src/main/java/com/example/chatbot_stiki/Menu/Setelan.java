@@ -39,8 +39,6 @@ public class Setelan extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_setelan);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
         photo = findViewById(R.id.profile_image);
         TvNama = findViewById(R.id.nama);
         TvEmail = findViewById(R.id.email);

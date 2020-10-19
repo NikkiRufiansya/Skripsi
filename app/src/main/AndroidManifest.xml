@@ -24,8 +24,7 @@
             android:name=".Menu.Help"
             android:parentActivityName=".Menu.Setelan" />
         <activity
-            android:name=".Menu.Setelan"
-            android:parentActivityName=".Menu.MainActivity" />
+            android:name=".Menu.Setelan" />
         <activity
             android:name=".Menu.LoginActivity"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
