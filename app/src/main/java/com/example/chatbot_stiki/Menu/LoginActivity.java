@@ -30,7 +30,7 @@ import java.security.NoSuchAlgorithmException;
 import java.util.HashMap;
 import java.util.Map;
 
-public class LoginActivity extends AppCompatActivity  {
+public class LoginActivity extends AppCompatActivity {
 
 
     EditText Editemail, Editpassword;
@@ -59,7 +59,6 @@ public class LoginActivity extends AppCompatActivity  {
     public static final String session_status = "session_status";
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,7 +81,7 @@ public class LoginActivity extends AppCompatActivity  {
         }
 
         String baru = md5("baru");
-        Log.d("baru" , baru);
+        Log.d("baru", baru);
         sharedpreferences = getSharedPreferences(my_shared_preferences, Context.MODE_PRIVATE);
         session = sharedpreferences.getBoolean(session_status, false);
         id = sharedpreferences.getString(TAG_ID, null);
@@ -97,25 +96,26 @@ public class LoginActivity extends AppCompatActivity  {
         }
 
 
-
         Login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String emailholder = Editemail.getText().toString();
-                String passwordholder = Editpassword.getText().toString();
-
-                if (emailholder.trim().length() > 0 && passwordholder.trim().length() > 0) {
-                    if (conMgr.getActiveNetworkInfo() != null
-                            && conMgr.getActiveNetworkInfo().isAvailable()
-                            && conMgr.getActiveNetworkInfo().isConnected()) {
-                        checkLogin(emailholder, passwordholder);
-                    } else {
-                        Toast.makeText(getApplicationContext() ,"No Internet Connection", Toast.LENGTH_LONG).show();
-                    }
-                } else {
-                    // Prompt user to enter credentials
-                    Toast.makeText(getApplicationContext() ,"Kolom tidak boleh kosong", Toast.LENGTH_LONG).show();
-                }
+                Intent intent = new Intent(LoginActivity.this, ChatActivitiy.class);
+                startActivity(intent);
+//                String emailholder = Editemail.getText().toString();
+//                String passwordholder = Editpassword.getText().toString();
+//
+//                if (emailholder.trim().length() > 0 && passwordholder.trim().length() > 0) {
+//                    if (conMgr.getActiveNetworkInfo() != null
+//                            && conMgr.getActiveNetworkInfo().isAvailable()
+//                            && conMgr.getActiveNetworkInfo().isConnected()) {
+//                        checkLogin(emailholder, passwordholder);
+//                    } else {
+//                        Toast.makeText(getApplicationContext() ,"No Internet Connection", Toast.LENGTH_LONG).show();
+//                    }
+//                } else {
+//                    // Prompt user to enter credentials
+//                    Toast.makeText(getApplicationContext() ,"Kolom tidak boleh kosong", Toast.LENGTH_LONG).show();
+//                }
             }
         });
 
@@ -139,7 +139,7 @@ public class LoginActivity extends AppCompatActivity  {
             public void onResponse(String response) {
                 Log.e(TAG, "Login Response: " + response.toString());
                 Log.d(TAG, "email: " + user_email);
-                Log.d(TAG,"Password :" + user_password);
+                Log.d(TAG, "Password :" + user_password);
                 hideDialog();
 
                 try {

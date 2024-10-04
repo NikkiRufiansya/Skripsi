@@ -2,10 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.chatbot_stiki">
 
-    <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:name=".Server.AppController"
@@ -15,7 +12,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Menu.Register"></activity>
+        <activity
+            android:name=".Menu.ChatActivitiy"
+            android:exported="false" />
+        <activity android:name=".Menu.Register" />
         <activity android:name=".Menu.EditProfile" />
         <activity
             android:name=".Menu.About"
@@ -23,10 +23,10 @@
         <activity
             android:name=".Menu.Help"
             android:parentActivityName=".Menu.Setelan" />
-        <activity
-            android:name=".Menu.Setelan" />
+        <activity android:name=".Menu.Setelan" />
         <activity
             android:name=".Menu.LoginActivity"
+            android:exported="true"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
